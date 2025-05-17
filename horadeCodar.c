@@ -32,21 +32,12 @@ int main(int argc, char const *argv[])
         printf("ALERTA RISCO DE CONGELAMENTO!!\n");
     }
     
+    (umidade >= 71)                   ?  printf("ALERTA NÍVEIS ELEVADOS DE UMIDADE RELATIVA\n"):
+    (umidade >= 30 && umidade <= 70)  ?  printf("Níveis normais de umidade realtiva do ar.\n"):
+    (umidade >=13  && umidade <= 29)  ?  printf("ALERTA NÍVEIS BAIXOS DE UMIDADE REALTIVA DO AR.\n"):
+                                         printf("ESTADO DE ALERTA NÍVEIS EXTREMAMENTE CRÍTICOS!!\n");
     
-    if(umidade >= 30 && umidade <= 70){
-        printf("Nivel normaL de umidade realtiva do ar\n");
-    }
-    else if (umidade < 30 && umidade >= 12)
-        {
-        printf("ALERTA NÍVEL CRITICO DE UMIDADE REALTIVA DO AR!\n");
-    }
-    else if (umidade < 12){
-        printf("ALERTA CLIMA DESÉRTICO\n");
-    }
-    else{
-        printf("ALERTA NÍVEL MUITO ACIMA DE UMIDADE RELATIVA DO AR!!\n");
-    }
-
+    
     if(estoque < estoqueMinimo){
         printf("ALERTA ESTOQUE NEGATIVO!!\n");
     }
