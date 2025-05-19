@@ -7,7 +7,7 @@ int main(int argc, char const *argv[])
     signed int estoque = 0;
     int estoqueMinimo = 0;
     
-    printf("Entre coam temperatura em Graus Celsius: ");
+    printf("Entre com temperatura em Graus Celsius: ");
     scanf("%f",&temperatura);
     //while (getchar() != '\n');
     

@@ -165,14 +165,14 @@ void compara_atributo(const Cadastro *c1, const Cadastro *c2, int atributo){
             
         case 6: // Densidade Demográfica
             printf("\n=== COMPARANDO DENSIDADE DEMOGRÁFICA ===\n");
-            if(c1->densidadepop > c2->densidadepop){
+            if(c1->densidadepop < c2->densidadepop){
                 printf("%s: %.2f hab/km2\n%s: %.2f hab/km2\n",
                       c1->nomecidade, c1->densidadepop, c2->nomecidade, c2->densidadepop);
-                printf(">> %s VENCE em densidade demográfica!\n",c1->nomecidade);
-            }else if(c1->densidadepop < c2->densidadepop){
+                printf(">> %s VENCE pois tem a menor densidade demográfica!\n",c1->nomecidade);
+            }else if(c1->densidadepop > c2->densidadepop){
                 printf("%s: %.2f hab/km2\n%s: %.2f hab/km2\n",
                       c2->nomecidade, c2->densidadepop, c1->nomecidade, c1->densidadepop);
-                printf(">> %s VENCE em densidade demográfica!\n",c2->nomecidade);
+                printf(">> %s VENCE pois tem a menor densidade demográfica!\n",c2->nomecidade);
             }else{
                 printf(">> EMPATE em densidade demográfica: %.2f hab/km2\n",c1->densidadepop);
             }

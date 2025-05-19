@@ -7,6 +7,8 @@ int main(int argc, char const *argv[])
     int opcao = 0 ;
     int numeroSecreto;
     int palpite;
+    int regras;
+
 
     printf("Menu Principal\n");
     printf("1.Inciar Jogo\n");
@@ -33,8 +35,19 @@ int main(int argc, char const *argv[])
         break;
 
     case 2:
-        break;
-        
+        printf("Explicação das regras :");
+        printf("Digite a opção relacionada as regras: ");
+        scanf("%d",&regras);  
+          switch (regras){
+            case 1:
+              printf("Regra 1\n");
+              break;
+            case 2:
+               printf("Regra 2\n");
+               break;  
+            default:
+              printf("Boa sorte!\n");
+            }    
     case 3:
         break;    
     
