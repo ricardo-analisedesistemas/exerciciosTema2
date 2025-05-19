@@ -7,7 +7,7 @@ typedef struct {
     char nomeCliente[50];
     float salario;
     int idade;
-    //dados a obter da venda
+    //dados a obter da compra
     float valorBruto;
     //dado condicional, aplicado caso sejam satisfeitas as condiçoes para aplicação do desconto
     int percentualDesc; // Percentual de desconto (10, 20, 30, etc.)
