@@ -2,6 +2,7 @@
 
 int main(int argc, char const *argv[])
 {
-    printf("Brm vindo ao git!");
+    printf("Bemvindo ao git!");
+    printf("Bem vindo!!");
     return 0;
 }
