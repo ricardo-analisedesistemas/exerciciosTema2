@@ -1,16 +1,16 @@
 #include<stdio.h>
-
+//foi usada nessa implementação essa struct para conter todos os campos cadastrais da carta
 typedef struct{
     //variáveis para dados cadastrais das cartas
     char idestado;
     char codigocarta [5];
-    char nomecidade [50];
+    char nomepais [50];
     int populacao;
     float area;
     long long int pib;
     int pontostur;
    ///variáveis para todos os calculos necessaŕios do programa
-   float pibper; //pib per capita
+   float pibper; 
    float densidadepop;
    long double densidadeinversa;
    long double superpoder;
@@ -20,26 +20,14 @@ typedef struct{
 void menu_comparacao(const Cadastro *carta1,const Cadastro *carta2);
 void compara_atributo(const Cadastro *c1, const Cadastro *c2, int atributo);
 
-//função para calcular renda per capita
-float calcula_pibper(long long int pib, int populacao){
-    return (float)pib / populacao;
-}
+//protótipos das funcões para calcular atributos
+float calcula_pibper(long long int pib, int populacao);   
+float calcula_densidade(int populacao, float area);
+long double calcula_densidadeinversa(float area, int populacao);
+long double calcula_superpoder(long long int pib, float area, int populacao, int pontosturisticos, float pibper);
 
-//funcao para calcular densidade demografica    
-float calcula_densidade(int populacao, float area){
-    return (float)populacao / area;
-}
-
-//função para calcular densidade demografica inversa
-long double calcula_densidadeinversa(float area, int populacao){
-    return area / populacao;
-}
-
-//função para calcular superpoder
-long double calcula_superpoder(long long int pib, float area, int populacao, int pontosturisticos, float pibper){
-    return (long double)pib + area + populacao + pontosturisticos + pibper;
-}
-
+//foi passado como parametro um vetor 'cadastra' do tipo Cadastro, 
+//para que a struct seja reaproveitada sem a necessidade de declarar novas variaveis a cada carta a ser inserida
 void cadastra_carta(Cadastro cadastra[], int quantidade){
     for(int i = 0; i < quantidade; i++){
         printf("   CADASTRO DE CARTAS JOGO SUPER TRUNFO   \n");
@@ -47,8 +35,8 @@ void cadastra_carta(Cadastro cadastra[], int quantidade){
         scanf(" %c",&cadastra[i].idestado);
         printf("Digite o código da carta: ");
         scanf("%4s",cadastra[i].codigocarta);
-        printf("Digite o nome da cidade: ");
-        scanf(" %49[^\n]",cadastra[i].nomecidade);
+        printf("Digite o nome da país: ");
+        scanf(" %49[^\n]",cadastra[i].nomepais);
         while(getchar() != '\n');
         printf("Digite a população total: ");
         scanf("%d",&cadastra[i].populacao);
@@ -59,7 +47,7 @@ void cadastra_carta(Cadastro cadastra[], int quantidade){
         printf("Digite a quantidade de pontos turísticos: ");
         scanf("%d",&cadastra[i].pontostur);
 
-        //calculos
+        //nesse trecho foram chamadas todas as funções responsaveis para calcular esses atributos
         cadastra[i].pibper = calcula_pibper(cadastra[i].pib,cadastra[i].populacao);
         cadastra[i].densidadepop = calcula_densidade(cadastra[i].populacao,cadastra[i].area);
         cadastra[i].densidadeinversa = calcula_densidadeinversa(cadastra[i].area, cadastra[i].populacao);
@@ -68,12 +56,13 @@ void cadastra_carta(Cadastro cadastra[], int quantidade){
     }
 }
 
+//exibe os dados de cada carta cadastrada e seus resultados!
 void exibe_resultado(Cadastro cartas[], int quantidade){
     printf("\n=== DADOS DAS CARTAS ===\n");
     for(int i = 0; i < quantidade; i++){
         printf("ID-ESTADO:  %c\n",cartas[i].idestado);
         printf("Código da Carta:  %s\n",cartas[i].codigocarta);
-        printf("Nome da cidade:  %s\n",cartas[i].nomecidade);
+        printf("Nome da cidade:  %s\n",cartas[i].nomepais);
         printf("População total:  %d\n",cartas[i].populacao);
         printf("Area total:  %.2f km2\n",cartas[i].area);
         printf("PIB:  %lld\n", cartas[i].pib);
@@ -92,12 +81,12 @@ void compara_atributo(const Cadastro *c1, const Cadastro *c2, int atributo){
             printf("\n=== COMPARANDO ÁREA ===\n");
             if(c1->area > c2->area){
                 printf("%s: %.2f km2\n%s: %.2f km2\n",
-                      c1->nomecidade, c1->area, c2->nomecidade, c2->area);
-                printf(">> %s VENCE em área/km2\n",c1->nomecidade);
+                      c1->nomepais, c1->area, c2->nomepais, c2->area);
+                printf(">> %s VENCE em área/km2\n",c1->nomepais);
             }else if(c1->area < c2->area){
                 printf("%s: %.2f km2\n%s: %.2f km2\n",
-                      c2->nomecidade, c2->area, c1->nomecidade, c1->area);
-                printf(">> %s VENCE em área/km2\n",c2->nomecidade);
+                      c2->nomepais, c2->area, c1->nomepais, c1->area);
+                printf(">> %s VENCE em área/km2\n",c2->nomepais);
             }else{
                 printf(">> EMPATE em área: %.2f km2\n",c1->area);
             }
@@ -107,12 +96,12 @@ void compara_atributo(const Cadastro *c1, const Cadastro *c2, int atributo){
             printf("\n=== COMPARANDO POPULAÇÃO ===\n");
             if(c1->populacao > c2->populacao){
                 printf("%s: %d hab.\n%s: %d hab.\n",
-                      c1->nomecidade, c1->populacao, c2->nomecidade, c2->populacao);
-                printf(">> %s VENCE em população!\n",c1->nomecidade);
+                      c1->nomepais, c1->populacao, c2->nomepais, c2->populacao);
+                printf(">> %s VENCE em população!\n",c1->nomepais);
             }else if(c1->populacao < c2->populacao){
                 printf("%s: %d hab.\n%s: %d hab.\n",
-                      c2->nomecidade, c2->populacao, c1->nomecidade, c1->populacao);
-                printf(">> %s VENCE em população!\n",c2->nomecidade);
+                      c2->nomepais, c2->populacao, c1->nomepais, c1->populacao);
+                printf(">> %s VENCE em população!\n",c2->nomepais);
             }else{
                 printf(">> EMPATE em população: %d hab.\n",c1->populacao);
             }
@@ -122,12 +111,12 @@ void compara_atributo(const Cadastro *c1, const Cadastro *c2, int atributo){
             printf("\n=== COMPARANDO PIB ===\n");
             if(c1->pib > c2->pib){
                 printf("%s: %lld bi\n%s: %lld bi\n",
-                      c1->nomecidade, c1->pib, c2->nomecidade, c2->pib);
-                printf(">> %s VENCE em PIB!\n",c1->nomecidade);
+                      c1->nomepais, c1->pib, c2->nomepais, c2->pib);
+                printf(">> %s VENCE em PIB!\n",c1->nomepais);
             }else if(c1->pib < c2->pib){
                 printf("%s: %lld bi\n%s: %lld bi\n",
-                      c2->nomecidade, c2->pib, c1->nomecidade, c1->pib);
-                printf(">> %s VENCE em PIB!\n",c2->nomecidade);
+                      c2->nomepais, c2->pib, c1->nomepais, c1->pib);
+                printf(">> %s VENCE em PIB!\n",c2->nomepais);
             }else{
                 printf(">> EMPATE em PIB: %lld bi\n",c1->pib);
             }
@@ -137,12 +126,12 @@ void compara_atributo(const Cadastro *c1, const Cadastro *c2, int atributo){
             printf("\n=== COMPARANDO PONTOS TURÍSTICOS ===\n");
             if(c1->pontostur > c2->pontostur){
                 printf("%s: %d pontos\n%s: %d pontos\n",
-                      c1->nomecidade, c1->pontostur, c2->nomecidade, c2->pontostur);
-                printf(">> %s VENCE em pontos turísticos!\n",c1->nomecidade);
+                      c1->nomepais, c1->pontostur, c2->nomepais, c2->pontostur);
+                printf(">> %s VENCE em pontos turísticos!\n",c1->nomepais);
             }else if(c1->pontostur < c2->pontostur){
                 printf("%s: %d pontos\n%s: %d pontos\n",
-                      c2->nomecidade, c2->pontostur, c1->nomecidade, c1->pontostur);
-                printf(">> %s VENCE em pontos turísticos!\n",c2->nomecidade);
+                      c2->nomepais, c2->pontostur, c1->nomepais, c1->pontostur);
+                printf(">> %s VENCE em pontos turísticos!\n",c2->nomepais);
             }else{
                 printf(">> EMPATE em pontos turísticos: %d pontos\n",c1->pontostur);
             }
@@ -152,12 +141,12 @@ void compara_atributo(const Cadastro *c1, const Cadastro *c2, int atributo){
             printf("\n=== COMPARANDO PIB PER CAPITA ===\n");
             if(c1->pibper > c2->pibper){
                 printf("%s: R$ %.2f\n%s: R$ %.2f\n",
-                      c1->nomecidade, c1->pibper, c2->nomecidade, c2->pibper);
-                printf(">> %s VENCE em PIB per capita!\n",c1->nomecidade);
+                      c1->nomepais, c1->pibper, c2->nomepais, c2->pibper);
+                printf(">> %s VENCE em PIB per capita!\n",c1->nomepais);
             }else if(c1->pibper < c2->pibper){
                 printf("%s: R$ %.2f\n%s: R$ %.2f\n",
-                      c2->nomecidade, c2->pibper, c1->nomecidade, c1->pibper);
-                printf(">> %s VENCE em PIB per capita!\n",c2->nomecidade);
+                      c2->nomepais, c2->pibper, c1->nomepais, c1->pibper);
+                printf(">> %s VENCE em PIB per capita!\n",c2->nomepais);
             }else{
                 printf(">> EMPATE em PIB per capita: R$ %.2f\n",c1->pibper);
             }
@@ -167,12 +156,12 @@ void compara_atributo(const Cadastro *c1, const Cadastro *c2, int atributo){
             printf("\n=== COMPARANDO DENSIDADE DEMOGRÁFICA ===\n");
             if(c1->densidadepop < c2->densidadepop){
                 printf("%s: %.2f hab/km2\n%s: %.2f hab/km2\n",
-                      c1->nomecidade, c1->densidadepop, c2->nomecidade, c2->densidadepop);
-                printf(">> %s VENCE pois tem a menor densidade demográfica!\n",c1->nomecidade);
+                      c1->nomepais, c1->densidadepop, c2->nomepais, c2->densidadepop);
+                printf(">> %s VENCE pois tem a menor densidade demográfica!\n",c1->nomepais);
             }else if(c1->densidadepop > c2->densidadepop){
                 printf("%s: %.2f hab/km2\n%s: %.2f hab/km2\n",
-                      c2->nomecidade, c2->densidadepop, c1->nomecidade, c1->densidadepop);
-                printf(">> %s VENCE pois tem a menor densidade demográfica!\n",c2->nomecidade);
+                      c2->nomepais, c2->densidadepop, c1->nomepais, c1->densidadepop);
+                printf(">> %s VENCE pois tem a menor densidade demográfica!\n",c2->nomepais);
             }else{
                 printf(">> EMPATE em densidade demográfica: %.2f hab/km2\n",c1->densidadepop);
             }
@@ -182,12 +171,12 @@ void compara_atributo(const Cadastro *c1, const Cadastro *c2, int atributo){
             printf("\n=== COMPARANDO DENSIDADE INVERSÁ ===\n");
             if(c1->densidadeinversa > c2->densidadeinversa){
                 printf("%s: %.8Lf km2/hab\n%s: %.8Lf km2/hab\n",
-                      c1->nomecidade, c1->densidadeinversa, c2->nomecidade, c2->densidadeinversa);
-                printf(">> %s VENCE em densidade inversa!\n",c1->nomecidade);
+                      c1->nomepais, c1->densidadeinversa, c2->nomepais, c2->densidadeinversa);
+                printf(">> %s VENCE em densidade inversa!Pois existe maior área disponível por pessoa!!\n",c1->nomepais);
             }else if(c1->densidadeinversa < c2->densidadeinversa){
                 printf("%s: %.8Lf km2/hab\n%s: %.8Lf km2/hab\n",
-                      c2->nomecidade, c2->densidadeinversa, c1->nomecidade, c1->densidadeinversa);
-                printf(">> %s VENCE em densidade inversa!\n",c2->nomecidade);
+                      c2->nomepais, c2->densidadeinversa, c1->nomepais, c1->densidadeinversa);
+                printf(">> %s VENCE em densidade inversa!Pois existe maior área disponível por pessoa!!\n",c2->nomepais);
             }else{
                 printf(">> EMPATE em densidade inversa: %.8Lf km2/hab\n",c1->densidadeinversa);
             }
@@ -197,12 +186,12 @@ void compara_atributo(const Cadastro *c1, const Cadastro *c2, int atributo){
             printf("\n=== COMPARANDO SUPER PODER ===\n");
             if(c1->superpoder > c2->superpoder){
                 printf("%s: %.2Lf\n%s: %.2Lf\n",
-                      c1->nomecidade, c1->superpoder, c2->nomecidade, c2->superpoder);
-                printf(">> %s VENCE em SUPER PODER!\n",c1->nomecidade);
+                      c1->nomepais, c1->superpoder, c2->nomepais, c2->superpoder);
+                printf(">> %s VENCE em SUPER PODER!\n",c1->nomepais);
             }else if(c1->superpoder < c2->superpoder){
                 printf("%s: %.2Lf\n%s: %.2Lf\n",
-                      c2->nomecidade, c2->superpoder, c1->nomecidade, c1->superpoder);
-                printf(">> %s VENCE em SUPER PODER!\n",c2->nomecidade);
+                      c2->nomepais, c2->superpoder, c1->nomepais, c1->superpoder);
+                printf(">> %s VENCE em SUPER PODER!\n",c2->nomepais);
             }else{
                 printf(">> EMPATE em SUPER PODER: %.2Lf\n",c1->superpoder);
             }
@@ -241,7 +230,7 @@ void menu_comparacao(const Cadastro *carta1, const Cadastro *carta2){//assinatur
             continue;
         }
 
-        compara_atributo(carta1, carta2, opcao);
+        compara_atributo(carta1, carta2, opcao);//chamada da função para comparação entre as cartas
         
         printf("\nPressione Enter para continuar...");
         while(getchar() != '\n');
@@ -250,13 +239,35 @@ void menu_comparacao(const Cadastro *carta1, const Cadastro *carta2){//assinatur
     } while(opcao != 0);
 }
 
+
+//FUNÇÃO MAIN
 int main(){
-    const int numcartas = 2;
-    Cadastro supertrunfo[numcartas];
+    const int numcartas = 2;//passado como argumento para a função cadastra_carta, determina que será um vetor de 2 posições
+    Cadastro supertrunfo[numcartas];//armazenando 2 cartas cadastradas
     
     cadastra_carta(supertrunfo, numcartas);
     exibe_resultado(supertrunfo, numcartas);
     menu_comparacao(&supertrunfo[0], &supertrunfo[1]);//variavel supertrunfo foi passada como array de struct
                                                       // contém operador & que retorna o endereço de memória da primeira carta array[0], e da segunda no array [1] 
     return 0;
+}
+
+//função para calcular renda per capita
+float calcula_pibper(long long int pib, int populacao){
+    return (float)pib / populacao;
+}
+
+//funcao para calcular densidade demografica    
+float calcula_densidade(int populacao, float area){
+    return (float)populacao / area;
+}
+
+//função para calcular densidade demografica inversa
+long double calcula_densidadeinversa(float area, int populacao){
+    return area / populacao;
+}
+
+//função para calcular superpoder
+long double calcula_superpoder(long long int pib, float area, int populacao, int pontosturisticos, float pibper){
+    return (long double)pib + area + populacao + pontosturisticos + pibper;
 }
