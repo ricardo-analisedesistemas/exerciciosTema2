@@ -21,21 +21,23 @@ int main(int argc, char const *argv[])
     case 1:
     do
     {
-    
+      system("clear");
       for (int i = 0; i < tamanho; i++) {
         printf("\n");
         printf("Digite sua nota: ");
          scanf("%f",&nota[i]);
-         system("clear");
+         
            
     }  
        if(nota[0] < 0 || nota[0] > 10 || nota[1] < 0 || nota[1] > 10 || nota[2] < 0 || nota[2] > 10){
-         printf(("Nota inválida -- REPITA A OPERAÇÃO\n"));
+         printf(("Nota inválida -- REPITA A OPERAÇÃO pressionando 'ENTER'\n"));
+         while ((getchar()) != '\n'); // Limpa o buffer
+         getchar(); // Agora espera corretamente
      }else{
          float media =  calcula_media(nota, 3);
          printf("\n");
          printf("Primeira nota 1 =%.2f : Segunda nota 2 =%.2f : Terceira nota 3 =%.2f\n\n",nota[0],nota[1],nota[2]);
-         printf("Sua média entre suas 3 últimas notas = %.2f\n",media);
+         printf("A média entre suas 3 últimas notas = %.2f\n",media);
      }
     } while (nota[0] < 0 || nota[0] > 10 || nota[1] < 0 || nota[1] > 10 || nota[2] < 0 || nota[2] > 10);
     
